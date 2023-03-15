@@ -16,16 +16,23 @@ crc_data = read.csv(here::here("crc_stage_iv_os_dx_data.csv"))
 ## tt_os_dx_mos = time (months) from date of cancer diagnosis to overall survival, either death or last follow-up
 
 ## Traditional approach - does not account for left truncation
-traditional_model = survfit(Surv(event = os_status_dx, time = tt_os_dx_mos) ~ 1, 
-                            data = crc_data)
+traditional_model = survfit(
+  Surv(event = os_status_dx, 
+       time = tt_os_dx_mos) ~ 1, 
+  data = crc_data)
 print(traditional_model)
-summary(traditional_model)
+# summary(traditional_model) # AP: not helpful to look at.
 
 ## Model adjusting for delayed entry
-delayed_entry_model = survfit(Surv(event = os_status_dx, time = tt_cpt_report_mos, time2 = tt_os_dx_mos) ~ 1, 
-                              data = crc_data)
+delayed_entry_model = survfit(
+  Surv(event = os_status_dx, 
+       time = tt_cpt_report_mos, 
+       time2 = tt_os_dx_mos,
+       # threw in the "type = 'counting'" just to show it's redundant.
+       type = "counting") ~ 1, 
+  data = crc_data)
 print(delayed_entry_model)
-summary(delayed_entry_model)
+# summary(delayed_entry_model)
 
 
 ## Plot survival curves
