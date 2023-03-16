@@ -44,7 +44,7 @@ survfit(
 
 
 
-
+## AP: Added the following block for the testing of quasi-independence:
 # Quasi-independence testing of time to survival and time to genomic screening.
 # Martin and Betensky (2005)
 with(toy_data_subset,
@@ -66,7 +66,7 @@ with(toy_data_subset,
      tranSurv::cKendall(trun = tt_cpt_report_mos,
                         obs = tt_os_dx_mos,
                         delta = os_status_dx,
-                        method = "IPW1")
+                        method = "IPW2")
 )
 
 
